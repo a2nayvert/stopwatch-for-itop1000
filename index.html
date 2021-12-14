@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Stopwatch for ITOP1000</title>
+
+	<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+ 	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+
+</head>
+<body>
+
+	<div id="root"></div>
+	
+
+
+
+
+	<script type="text/babel">
+
+
+
+
+
+				class Stopwatcher extends React.Component {
+		  constructor(props) {
+		    super(props);
+
+		    this.timer = null;
+
+		    this.state = {
+		      seconds: 0,
+		      minutes: 0,
+		      hours: 0,
+		      status: "run"
+		    };
+		  }
+
+		  componentDidMount() {
+		  	if(this.state.status == "run"){
+
+		  		this.timer = setInterval(() => {this.tick(),this.minutes(),this.hours();}, 1000);
+		  }
+		    
+		  }
+
+		  tick() {
+		  if(this.state.status == "run"){
+		    this.setState({
+		      seconds: this.state.seconds + 1,
+
+
+		    })}
+		  }
+
+		  minutes(){
+		 
+		  if(this.state.seconds == 60){
+		  	this.setState({
+
+		  		minutes: this.state.minutes + 1,
+		  		seconds: 0
+		  })
+		   }
+		}
+
+		hours(){
+			if(this.state.minutes == 60){
+
+			this.setState({
+				hours: this.state.hours + 1,
+				minutes: 0
+		})
+		}
+
+		}
+
+		 
+
+		  
+		 buttonClickedReset = (a) => {
+		 	this.setState({
+		 		seconds: 0,
+		      	minutes: 0,
+		      	hours: 0
+		 })
+		}
+
+		buttonClickedWait = (a) => {
+
+			this.setState({
+				status: "wait"
+		})
+	}
+
+		buttonClickedStart = (a) => {
+
+			this.setState({
+				status: "run"
+		})
+		
+		
+	}
+
+		buttonClickedStop = (a) => {
+
+			this.setState({
+				seconds: 0,
+		      	minutes: 0,
+		      	hours: 0,
+				status: "end"
+		})
+		
+
+	}
+
+		  render() {
+		    return (
+		    	<div>
+		      		<h1>{this.state.hours}:{this.state.minutes}:{this.state.seconds}</h1>
+		      		<button onClick={this.buttonClickedStart}>Start</button>
+		      		<button onClick={this.buttonClickedStop}>Stop</button>
+		      		<button onClick={this.buttonClickedWait}>Wait</button>
+		      		<button onClick={this.buttonClickedReset}>Reset</button>
+		      	</div>
+
+		    )
+		  }
+		}
+
+		const rootElement = document.getElementById("root");
+		ReactDOM.render(<Stopwatcher />, rootElement);
+
+
+
+
+	</script >
+
+</body>
+</html>
